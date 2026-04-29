@@ -4,8 +4,7 @@ import org.example.server.ClientHandler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
+//Registro de clientes (quién esta conectado, envio de mensajes y listar usuarios)
 public class ClientRegistry {
     private final Map<String, ClientHandler> clientesConectados = new ConcurrentHashMap<>();
 
@@ -42,7 +41,7 @@ public class ClientRegistry {
 
         return "Clientes conectados: " + String.join(", ", clientesConectados.keySet());
     }
-
+//Recorre todos los clientes conectados y les manda un mensaje.
     public void enviarATodos(String emisor, String mensaje) {
         for (ClientHandler cliente : clientesConectados.values()) {
             if (!cliente.getNombreUsuario().equalsIgnoreCase(emisor)) {
@@ -50,7 +49,7 @@ public class ClientRegistry {
             }
         }
     }
-
+//Busca un usuario por nombre y le manda el mensaje si existe
     public String enviarAUno(String emisor, String receptor, String mensaje) {
         ClientHandler destino = clientesConectados.get(receptor.toUpperCase());
 
@@ -61,7 +60,7 @@ public class ClientRegistry {
 
         return "Usuario no encontrado: " + receptor;
     }
-
+//Separa los destinatarios por coma y reenvía a cada uno.
     public String enviarAMultiples(String emisor, String[] receptores, String mensaje) {
         StringBuilder inexistentes = new StringBuilder();
         boolean algunoExiste = false;
